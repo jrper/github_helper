@@ -1,0 +1,65 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+- master
+
+strategy:
+  matrix:
+    ubuntu3.6:
+      imageName: "ubuntu-16.04"
+      pythonVersion: "3.6"
+    ubuntu3.7:
+      imageName: "ubuntu-16.04"
+      pythonVersion: "3.7"
+    windows3.6:
+      imageName: "vs2017-win2016"
+      pythonVersion: "3.6"
+    windows3.7:
+      imageName: "vs2017-win2016"
+      pythonVersion: "3.7"
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(pythonVersion)'
+  displayName: 'Use Python $(pythonVersion)'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+- script: |
+    python setup.py build_ext --inplace
+  displayName: 'Build extensions'
+
+- script: |
+    pip install -e .
+  displayName: 'Install package'
+
+- script: |
+    pip install pytest pytest-cov pytest-azurepipelines
+    python -m pytest --doctest-modules example --cov=example --cov-report=xml
+  displayName: 'pytest'
+
+- script: |
+    pip install sphinx
+    python -m sphinx docs docs/html
+  displayName: 'Build Documentation'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: 'test-output.xml'
+    testRunTitle: 'Publish test results for Python $(pythonVersion)'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: 'coverage.xml'
