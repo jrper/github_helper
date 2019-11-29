@@ -1,0 +1,34 @@
+<html>
+<head></head>
+<body>
+
+<h1>GitHub Helper app</h1>
+
+<h4> Introduction and setup</h4>
+
+This helper tool automates several batch operations on GitHub repositories.
+
+For most operations a <a href="https://github.com/settings/tokens/new">GitHub personal access token</a> with the <b>repo</b> and <b>admin:org</b> permissions are required, issued by an owner of the organization. The token secret should be copied into the <i>token</i> field under the "Configure Helper Settings" popup.
+
+<h4>User Instructions</h4>
+
+Having suppied a GitHub PAT (see above), you may now enter a Github identity (i.e. a user or organization name) and a repository pattern to match. This repository pattern accepts  the asterisk, *, and question mark, ?, as a shell-style wildcard parameters, so that for example entering <i>test-*</i> as a repository name will match <i>test-one</i>, <i>test-two</i>, etc.
+
+<h5>Search for Matching Repositories</h5>
+
+This option produces a list of repositories under the chosen identity which match the specified pattern.
+
+<h5>Archive Matching Repositories</h5>
+
+This option will make matching repositories to be archived (i.e. read only). Since this option can only be undone via the web interface, you are required to confirm this operation before it is performed.
+
+<h5>Change Team Settings</h5>
+
+This option allows a specified team to be added or removed from matching repositories. The list of teams is drawn from the organization data and cannot be modified from within the tool.
+
+<h5>Modify Branch Protections</h5>
+
+This option allows branch protections (i.e. forced code review and Travis test checks) to be added to a named branch 
+
+</body>
+</html>
