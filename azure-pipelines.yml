@@ -45,7 +45,7 @@ steps:
 
 - script: |
     pip install pytest pytest-cov pytest-azurepipelines
-    python -m pytest --doctest-modules example --cov=example --cov-report=xml
+    python -m pytest --doctest-modules github_helper --cov=github_helper --cov-report=xml
   displayName: 'pytest'
 
 - script: |
