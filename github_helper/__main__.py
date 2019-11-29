@@ -1,13 +1,5 @@
-import sys
+from . import run
 
-from qtpy import QtWidgets, QtGui
-
-from .gui import MainWindow
+run()
 
 
-app = QtWidgets.QApplication(sys.argv)
-app.setFont(QtGui.QFont("Lucida Grande", 12))
-win = MainWindow()
-win.show()
-
-sys.exit(app.exec_())
